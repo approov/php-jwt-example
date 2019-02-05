@@ -1,25 +1,99 @@
 # php-jwt-example
 
-This is an example of how to decode Auth0's generated tokens in PHP.
+> -----> NOT FOR PRODUCTION USAGE <-----
 
-It uses [firebase/php-jwt](https://github.com/firebase/php-jwt).
+This just a demo to exemplify how [Approov](https://approov.io/approov-in-detail.html) tokens may be checked in PHP.
 
-You have to Base64 url decode your client secret in order to validate.
+For production usage please use the package that best suites your framework of
+choice.
+
+This demo uses [firebase/php-jwt](https://github.com/firebase/php-jwt) and it is
+a fork of [another fork](https://github.com/auth0/php-jwt-example).
+
+
+## Setup
+
+Install the dependencies with [Composer](https://getcomposer.org):
+
+```bash
+composer install
+```
 
 ## Usage Instructions
 
-1. Install the dependencies with [Composer](https://getcomposer.org): `$ composer install`
-2. Run: `$ php test.php`
+### With your PHP Server
 
-See <test.php> for code examples.
+From the host shell:
+
+```
+$ php approov-examples.php`
+```
+
+### With PHP on Docker
+
+From the host shell:
+
+```bash
+$ ./php-docker
+
+php-fpm at 4f8f180c6c43 in /var/www/html (master●●●)
+$
+```
+
+Now we are inside the docker container shell, and we just need to type:
+
+```bash
+php-fpm at 4f8f180c6c43 in /var/www/html (master●●●)
+$ ./approov-examples.php
+```
+
+### Output
+
+```bash
+---> Try to decode with an empty Approov Secret <---
+
+ * Invalid Argument Exception: Key may not be empty
+
+
+---> Try to decode with an empty Approov JWT Token <---
+
+ * Unexpected Value Exception: Wrong number of segments
+
+
+---> Try to decode with a malformed Approov JWT token <---
+
+ * Domain Exception: Malformed UTF-8 characters
+
+
+---> Try to decode with an expired Approov JWT token <---
+
+ * Unexpected Value Exception: Expired token
+
+
+---> Try to decode with an Approov JWT token signed with an unknown secret <---
+
+ * Unexpected Value Exception: Signature verification failed
+
+
+---> Decode a Valid Approov JWT token <---
+
+$decoded: object(stdClass)#2 (3) {
+  ["iss"]=>
+  string(6) "custom"
+  ["pay"]=>
+  string(44) "f3U2fniBJVE04Tdecj0d6orV9qT9t52TjfHxdUqDBgY="
+  ["exp"]=>
+  int(33083731896)
+}
+```
+
+See [approov-examples.php](approov-examples.php) for the code examples.
+
 
 ## Issue Reporting
 
-If you have found a bug or if you have a feature request, please report them at this repository issues section. Please do not report security vulnerabilities on the public GitHub issue tracker. The [Responsible Disclosure Program](https://auth0.com/whitehat) details the procedure for disclosing security issues.
+If you have found a bug please report them at this repository issues section.
 
-## Author
-
-[Auth0](auth0.com)
 
 ## License
 

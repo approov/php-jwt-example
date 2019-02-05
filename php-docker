@@ -1,0 +1,8 @@
+#!/bin/bash
+
+
+sudo docker run \
+    --rm \
+    -it \
+    --volume $PWD:/var/www/html \
+    exadra37/php7-dev-cli
